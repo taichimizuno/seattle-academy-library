@@ -46,12 +46,9 @@
                                 </a> <input type="hidden" name="bookId" value="${bookInfo.bookId}">
                             </form>
                             <ul>
-                                <li class="book_title">
-                                ${bookInfo.title}
-                                <li class="book_author">
-                                ${bookInfo.author}
-                                <li class="book_publisher">
-                                ${bookInfo.publisher}
+                                <li class="book_title">${bookInfo.title}
+                                <li class="book_author">${bookInfo.author}（著）
+                                <li class="book_publisher">出版社：${bookInfo.publisher}
                                 </li>
                             </ul>
                         </div>
