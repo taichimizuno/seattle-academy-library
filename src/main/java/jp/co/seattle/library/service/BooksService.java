@@ -21,6 +21,7 @@ import jp.co.seattle.library.rowMapper.BookInfoRowMapper;
 @Service
 public class BooksService {
     final static Logger logger = LoggerFactory.getLogger(BooksService.class);
+    
     @Autowired
     private JdbcTemplate jdbcTemplate;
 
@@ -72,4 +73,14 @@ public class BooksService {
 
         jdbcTemplate.update(sql);
     }
+
+
+//書籍を削除する
+public void deleteBook(int bookId) {
+
+	    String sql = "delete from books where id =" + bookId;
+	
+	    jdbcTemplate.update(sql);
+	}
+
 }
