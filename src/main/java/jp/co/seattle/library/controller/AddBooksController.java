@@ -1,5 +1,7 @@
 package jp.co.seattle.library.controller;
 
+import java.util.ArrayList;
+import java.util.List;
 import java.util.Locale;
 
 import org.slf4j.Logger;
@@ -34,6 +36,7 @@ public class AddBooksController {
     //RequestParamでname属性を取得
     public String login(Model model) {
         return "addBook";
+
     }
 
     /**
@@ -53,7 +56,13 @@ public class AddBooksController {
             @RequestParam("author") String author,
             @RequestParam("publisher") String publisher,
             @RequestParam("thumbnail") MultipartFile file,
+            @RequestParam("publishDate") String publishDate,
+            @RequestParam("isbn") String isbn,
+            @RequestParam("description") String description,
             Model model) {
+    	
+    	List<String>list = new ArrayList<String>();
+    	
         logger.info("Welcome insertBooks.java! The client locale is {}.", locale);
 
         // パラメータで受け取った書籍情報をDtoに格納する。
@@ -61,6 +70,9 @@ public class AddBooksController {
         bookInfo.setTitle(title);
         bookInfo.setAuthor(author);
         bookInfo.setPublisher(publisher);
+        bookInfo.setPublishDate(publishDate);
+        bookInfo.setIsbn(isbn);
+        bookInfo.setDescription(description);
 
         // クライアントのファイルシステムにある元のファイル名を設定する
         String thumbnail = file.getOriginalFilename();
@@ -85,13 +97,31 @@ public class AddBooksController {
         }
 
         // 書籍情報を新規登録する
-        booksService.registBook(bookInfo);
-
+              
+        if (bookInfo.getTitle().isEmpty() || bookInfo.getAuthor().isEmpty() || bookInfo.getPublisher().isEmpty() ||
+        		bookInfo.getPublishDate().isEmpty()) {
+        	list.add("必須項目に入力してください");
+        	    
+        }
+        if (publishDate.length() != 8 && publishDate.matches ("^[0-9]*$")) {
+        	list.add("出版日は半角数字のYYYYMMDD形式で入力してください");
+        }
+        if (isbn.length() != 10 && isbn.length() != 13 && isbn.length() != 0 && isbn.matches ("^[0-9]*$")) {
+//        booksService.registBook(bookInfo);
+        list.add("ISBNは半角数字かつ10文字か13文字で入力してください");
+//		model.addAttribute("errorMessageDetails", list);
+//		return "addBook";
+        }
+        if (!(list == null || list.size() ==0)) {
+        	model.addAttribute("errorMessageDetails", list);
+    		return "addBook";
+        }
         model.addAttribute("resultMessage", "登録完了");
-
         // TODO 登録した書籍の詳細情報を表示するように実装
+        model.addAttribute("bookDetailsInfo", bookInfo);
         //  詳細画面に遷移する
         return "details";
+        
     }
 
 }
