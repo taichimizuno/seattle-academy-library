@@ -48,14 +48,12 @@ public class BooksService {
      */
     
     
-    public BookDetailsInfo getLatestBookInfo() {
-
+    public int max_id() {
         // JSPに渡すデータを設定する
-        String sql = "SELECT * FROM books WHERE id = (SELECT MAX(id) FROM books)";
+        String sql = "SELECT max(id) FROM books WHERE id = (SELECT MAX(id) FROM books)";
+        int bookId = jdbcTemplate.queryForObject(sql, Integer.class);
 
-        BookDetailsInfo bookDetailsInfo = jdbcTemplate.queryForObject(sql, new BookDetailsInfoRowMapper());
-
-        return bookDetailsInfo;
+        return bookId;
     }
         
     

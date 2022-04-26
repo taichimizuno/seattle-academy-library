@@ -107,21 +107,22 @@ public class AddBooksController {
         	list.add("出版日は半角数字のYYYYMMDD形式で入力してください");
         }
         if (isbn.length() != 10 && isbn.length() != 13 && isbn.length() != 0 && isbn.matches ("^[0-9]*$")) {
-//        booksService.registBook(bookInfo);
+
         list.add("ISBNは半角数字かつ10文字か13文字で入力してください");
-//		model.addAttribute("errorMessageDetails", list);
-//		return "addBook";
+
         }
         if (!(list == null || list.size() ==0)) {
         	model.addAttribute("errorMessageDetails", list);
+        	model.addAttribute("bookInfo", bookInfo);
     		return "addBook";
         }
-        
+       
         booksService.registBook(bookInfo);
         model.addAttribute("resultMessage", "登録完了");
-        
+      
         // TODO 登録した書籍の詳細情報を表示するように実装
-        model.addAttribute("bookDetailsInfo", bookInfo);
+        int Max = booksService.max_id();
+        model.addAttribute("bookDetailsInfo", booksService.getBookInfo(Max));
         //  詳細画面に遷移する
         return "details";
         
