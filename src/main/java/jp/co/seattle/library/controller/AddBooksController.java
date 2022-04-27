@@ -116,16 +116,15 @@ public class AddBooksController {
         	model.addAttribute("bookInfo", bookInfo);
     		return "addBook";
         }
+        
        
         booksService.registBook(bookInfo);
         model.addAttribute("resultMessage", "登録完了");
-      
         // TODO 登録した書籍の詳細情報を表示するように実装
         int Max = booksService.max_id();
         model.addAttribute("bookDetailsInfo", booksService.getBookInfo(Max));
         //  詳細画面に遷移する
         return "details";
-        
     }
 
 }
