@@ -22,6 +22,7 @@ public class BookInfo {
     private String publishDate;
 
     private String thumbnail;
+    
 
     public BookInfo() {
 
@@ -35,6 +36,7 @@ public class BookInfo {
         this.publisher = publisher;
         this.publishDate = publishDate;
         this.thumbnail = thumbnail;
+
     }
 
 }
