@@ -108,8 +108,7 @@ public class AddBooksController {
         }
         if (isbn.length() != 10 && isbn.length() != 13 && isbn.length() != 0 && isbn.matches ("^[0-9]*$")) {
 
-        list.add("ISBNは半角数字かつ10文字か13文字で入力してください");
-
+        	list.add("ISBNは半角数字かつ10文字か13文字で入力してください");
         }
         if (!(list == null || list.size() ==0)) {
         	model.addAttribute("errorMessageDetails", list);

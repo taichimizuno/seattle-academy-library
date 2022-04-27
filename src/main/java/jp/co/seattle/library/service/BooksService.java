@@ -55,13 +55,14 @@ public class BooksService {
 
         return bookId;
     }
-        
-    /**
-     * 書籍を登録する
-     *
-     * @param bookInfo 書籍情報
-     */
+
     
+    /**
+     * 書籍IDに紐づく書籍詳細情報を取得する
+     *
+     * @param bookId 書籍ID
+     * @return 書籍情報
+     */
     public BookDetailsInfo getBookInfo(int bookId) {
 
         // JSPに渡すデータを設定する
@@ -73,7 +74,11 @@ public class BooksService {
         return bookDetailsInfo;
     }
 
-    
+    /**
+     * 書籍を登録する
+     *
+     * @param bookInfo 書籍情報
+     */
     public void registBook(BookDetailsInfo bookInfo) {
 
         String sql = "INSERT INTO books (title, author,publisher,publish_date,thumbnail_name,thumbnail_url, isbn, description, reg_date,upd_date) VALUES ('"
