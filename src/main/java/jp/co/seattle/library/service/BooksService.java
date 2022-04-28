@@ -55,7 +55,6 @@ public class BooksService {
 
         return bookId;
     }
-
     
     /**
      * 書籍IDに紐づく書籍詳細情報を取得する
@@ -104,5 +103,20 @@ public void deleteBook(int bookId) {
 	
 	    jdbcTemplate.update(sql);
 	}
+
+//本の情報を更新する
+public void editBook(BookDetailsInfo bookInfo) {
+	String sql = "UPDATE books SET title ='" + bookInfo.getTitle() 
+	+ "', author = '" + bookInfo.getAuthor() 
+	+ "', publisher = '" +  bookInfo.getPublisher() 
+	+ "', publish_date = '" + bookInfo.getPublishDate() 
+	+ "', thumbnail_url ='" + bookInfo.getThumbnailUrl() 
+	+ "', isbn ='"  + bookInfo.getIsbn() 
+    + "', upd_date = now(), description ='" + bookInfo.getDescription() 
+	+ "' Where id = " + bookInfo.getBookId();
+	
+	 jdbcTemplate.update(sql);
+}
+
 
 }
