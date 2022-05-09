@@ -118,5 +118,17 @@ public void editBook(BookDetailsInfo bookInfo) {
 	 jdbcTemplate.update(sql);
 }
 
+//書籍を貸出し状態にする
+public void rentBook(int bookId) {
+
+    String sql = "INSERT INTO rentbooks (book_id) SELECT " + bookId + "where NOT EXISTS (select book_id from rentbooks where book_id = " + bookId +")";
+    
+	    jdbcTemplate.update(sql);
+	}
+
+public int count() {
+	String sql = "select count(book_id) from rentbooks";
+	return jdbcTemplate.queryForObject(sql, int.class);
+	}
 
 }
