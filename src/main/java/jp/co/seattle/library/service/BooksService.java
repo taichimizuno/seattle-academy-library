@@ -132,7 +132,7 @@ public int count() {
 	}
 //書籍を返却する
 public int returnCount(int bookId) {
-	String sql = "SELECT COUNT(*) FROM rentbooks WHERE id =" + bookId;
+	String sql = "SELECT COUNT(*) FROM rentbooks WHERE book_id =" + bookId;
 	return jdbcTemplate.queryForObject(sql, int.class);
 }
 
