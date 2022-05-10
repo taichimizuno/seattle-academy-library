@@ -31,8 +31,18 @@ public class BulkRegistController {
 
     @Autowired
     private BooksService booksService;
-
-    @RequestMapping(value = "/bulkRegist", method = RequestMethod.GET) //value＝actionで指定したパラメータ
+    /**
+     * 書籍情報を登録する
+     * @param locale ロケール情報
+     * @param title 書籍名
+     * @param author 著者名
+     * @param publisher 出版社
+     * @param file サムネイルファイル
+     * @param model モデル
+     * @return 遷移先画面
+     */
+    @RequestMapping(value = "/bulkRegist", method = RequestMethod.GET) 
+    //value＝actionで指定したパラメータ
     //RequestParamでname属性を取得
     public String login(Model model) {
         return "bulkRegist";
@@ -60,19 +70,13 @@ public class BulkRegistController {
         List<String> errorMessages = new ArrayList<String>();
 		List<BookDetailsInfo> bookLists = new ArrayList<BookDetailsInfo>();
 		
-		if (file.isEmpty()) {
-			errorMessages.add("CSVファイルが読み取れません");
-		}
+		br.ready();
+		errorMessages.add("書籍情報が見つかりません");
 		
         while ((line = br.readLine()) != null) {
           final String[] split = line.split(",", -1);
           	
-			BookDetailsInfo bookInfo = new BookDetailsInfo();
-			bookInfo.setTitle(split[0]);
-			bookInfo.setAuthor(split[1]);
-			bookInfo.setPublisher(split[2]);
-			bookInfo.setPublishDate(split[3]);
-			bookInfo.setIsbn(split[4]);
+			
 			
 			// 行数カウントインクリメント
 			lineCount++;
@@ -84,6 +88,13 @@ public class BulkRegistController {
 					|| (split[3].length() != 8 || !(split[3].matches ("^[0-9]*$")))) {
 				errorMessages.add(lineCount + "行目でバリデーションエラーが発生しました");
 			} else {
+				BookDetailsInfo bookInfo = new BookDetailsInfo();
+				bookInfo.setTitle(split[0]);
+				bookInfo.setAuthor(split[1]);
+				bookInfo.setPublisher(split[2]);
+				bookInfo.setPublishDate(split[3]);
+				bookInfo.setIsbn(split[4]);
+//				書籍情報をlistに追加
 				bookLists.add(bookInfo);
 			}
 			
