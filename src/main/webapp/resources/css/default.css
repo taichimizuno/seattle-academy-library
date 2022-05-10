@@ -97,10 +97,11 @@ input[type=button].primary {
 /* 入力フォームのパーツ：テキストボックス */
 .input {
     display: block;
-    margin: 10px 0;
-    width:99.2%;
+/*     margin: 10px 0;
+    width:99.2%; */
     border :solid 1px #707070;
     border-radius: 0.2em;
+    text-align: center;
 }
 /* 入力フォームのパーツ：エラーメッセージ */
 .error {
@@ -108,6 +109,7 @@ input[type=button].primary {
     margin: 10px 0;
     padding: 10px;
     font-weight: bold;
+    text-align: center;
     color: #cc0000;
     border:solid 1px #cc0000;
     border-radius: 0.2em;

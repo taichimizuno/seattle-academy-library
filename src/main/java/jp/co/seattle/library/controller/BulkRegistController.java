@@ -70,8 +70,10 @@ public class BulkRegistController {
         List<String> errorMessages = new ArrayList<String>();
 		List<BookDetailsInfo> bookLists = new ArrayList<BookDetailsInfo>();
 		
-		br.ready();
+		
+		if (!br.ready()) {
 		errorMessages.add("書籍情報が見つかりません");
+		}
 		
         while ((line = br.readLine()) != null) {
           final String[] split = line.split(",", -1);
