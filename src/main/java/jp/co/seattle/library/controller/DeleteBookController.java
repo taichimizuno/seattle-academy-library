@@ -48,7 +48,7 @@ public class DeleteBookController {
         	model.addAttribute("bookDetailsInfo", booksService.getBookInfo(bookId));
         	return "details";
         }
-        
+        model.addAttribute("bookList", booksService.getBookList());
         return "home";
     }
 
