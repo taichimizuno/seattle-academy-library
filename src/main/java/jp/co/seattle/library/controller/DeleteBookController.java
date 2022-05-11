@@ -39,12 +39,17 @@ public class DeleteBookController {
             @RequestParam("bookId") Integer bookId,
             Model model) {
         logger.info("Welcome delete! The client locale is {}.", locale);
-        
-        booksService.deleteBook(bookId);
-        model.addAttribute("bookList", booksService.getBookList());
+       
+        int returnCount = booksService.returnCount(bookId);
+        if (returnCount == 0) {
+        	booksService.deleteBook(bookId);
+        } else {
+        	model.addAttribute("rentMessage", "まずは本を返してください");
+        	model.addAttribute("bookDetailsInfo", booksService.getBookInfo(bookId));
+        	return "details";
+        }
         
         return "home";
-
     }
 
 }
