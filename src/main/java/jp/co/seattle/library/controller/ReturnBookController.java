@@ -40,9 +40,9 @@ public class ReturnBookController {
         
         int returnCount = booksService.returnCount(bookId);
         if (returnCount == 0) {
-        	booksService.returnBook(bookId);
-        } else {
         	model.addAttribute("rentMessage", "借りられていません");
+        } else {
+        	booksService.returnBook(bookId);
         }
         
         model.addAttribute("bookDetailsInfo", booksService.getBookInfo(bookId));
