@@ -47,12 +47,6 @@ public class ReturnBookController {
         
         model.addAttribute("bookDetailsInfo", booksService.getBookInfo(bookId));
         
-        if (booksService.getBookInfo(bookId).getRentBookId() == 0) {
-        	model.addAttribute("statusMessage","貸出し可");
-        } else {
-        	model.addAttribute("statusMessage","貸出し中");
-        }
-        
         return "details";
 
     }

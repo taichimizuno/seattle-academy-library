@@ -40,16 +40,6 @@ public class DetailsController {
         logger.info("Welcome detailsControler.java! The client locale is {}.", locale);
         
         model.addAttribute("bookDetailsInfo", booksService.getBookInfo(bookId));
-               
-        System.out.println(booksService.getBookInfo(bookId).getRentBookId());
-//        BookDetailsInfo bookInfo = new BookDetailsInfo();
-//        bookInfo.setRentBookId(rentBookId);
-        
-        if (booksService.getBookInfo(bookId).getRentBookId() == 0) {
-        	model.addAttribute("statusMessage","貸出し可");
-        } else {
-        	model.addAttribute("statusMessage","貸出し中");
-        }
         
         
         return "details";

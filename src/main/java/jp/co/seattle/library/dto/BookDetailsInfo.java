@@ -30,7 +30,7 @@ public class BookDetailsInfo {
     
     private String description;
     
-    private int rentBookId;
+    private String status;
 
     public BookDetailsInfo() {
 
