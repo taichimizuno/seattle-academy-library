@@ -65,8 +65,7 @@ public class BooksService {
     public BookDetailsInfo getBookInfo(int bookId) {
 
         // JSPに渡すデータを設定する
-        String sql = "SELECT * FROM books where id ="
-                + bookId;
+        String sql = "SELECT * from books left outer join rentbooks on books.id = rentbooks.book_id  where books.id =" + bookId;
 
         BookDetailsInfo bookDetailsInfo = jdbcTemplate.queryForObject(sql, new BookDetailsInfoRowMapper());
 
@@ -121,7 +120,7 @@ public void editBook(BookDetailsInfo bookInfo) {
 //書籍を貸出し状態にする
 public void rentBook(int bookId) {
 
-    String sql = "INSERT INTO rentbooks (book_id) SELECT " + bookId + "where NOT EXISTS (select book_id from rentbooks where book_id = " + bookId +")";
+    String sql = "INSERT INTO rentbooks (book_id) SELECT " + bookId + " where NOT EXISTS (select book_id from rentbooks where rentbooks.book_id = " + bookId +")";
     
 	    jdbcTemplate.update(sql);
 	}
