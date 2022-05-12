@@ -118,7 +118,12 @@ public void editBook(BookDetailsInfo bookInfo) {
 	 jdbcTemplate.update(sql);
 }
 
-//書籍を貸出し状態にする
+/**
+ * 書籍情報を貸出しテーブルに追加する
+ *
+ * @param bookId 書籍ID
+ * @return 書籍情報
+ */
 public void rentBook(int bookId) {
 
     String sql = "INSERT INTO rentbooks (book_id) SELECT " + bookId + "where NOT EXISTS (select book_id from rentbooks where book_id = " + bookId +")";
@@ -126,6 +131,12 @@ public void rentBook(int bookId) {
 	    jdbcTemplate.update(sql);
 	}
 
+/**
+ * 貸出しテーブルのチェックをする
+ *
+ * @param bookId 書籍ID
+ * @return 書籍情報
+ */
 public int count() {
 	String sql = "select count(book_id) from rentbooks";
 	return jdbcTemplate.queryForObject(sql, int.class);

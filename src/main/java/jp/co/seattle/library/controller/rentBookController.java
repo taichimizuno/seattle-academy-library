@@ -22,8 +22,6 @@ public class rentBookController {
     final static Logger logger = LoggerFactory.getLogger(rentBookController.class);
     @Autowired
     private BooksService booksService;
-    @Autowired
-    private BooksService bookdService;
     /**
      * 対象書籍を削除する
      *
@@ -42,15 +40,15 @@ public class rentBookController {
             Model model) {
         logger.info("Welcome rent! The client locale is {}.", locale);
         
-        int size = booksService.count();
+        int beforeCount = booksService.count();
         booksService.rentBook(bookId);
-        int count = booksService.count();
+        int afterCount = booksService.count();
         
-        if (size == count) {
+        if (beforeCount == afterCount) {
         	model.addAttribute("rentMessage", "貸出し済みです");
         }
         
-        model.addAttribute("bookDetailsInfo", bookdService.getBookInfo(bookId));
+        model.addAttribute("bookDetailsInfo", booksService.getBookInfo(bookId));
         
         return "details";
 
