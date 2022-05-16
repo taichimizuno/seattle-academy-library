@@ -94,8 +94,27 @@ public class BooksService {
 
         jdbcTemplate.update(sql);
     }
+    /**
+     * 書籍を一括登録する
+     *
+     * @param bookInfo 書籍情報
+     */
+    public void bulkRegist(BookDetailsInfo bookInfo) {
 
+        String sql = "INSERT INTO books (title, author,publisher,publish_date, isbn, description, reg_date,upd_date) VALUES ('"
+                + bookInfo.getTitle() + "','" 
+        		+ bookInfo.getAuthor() + "','" 
+                + bookInfo.getPublisher() + "','" 
+        		+ bookInfo.getPublishDate() +"','" 
+                + bookInfo.getIsbn() + "','"
+                + bookInfo.getDescription() + "',"
+                + "now(),"
+                + "now())";
 
+        jdbcTemplate.update(sql);
+    }
+    
+    
 //書籍を削除する
 public void deleteBook(int bookId) {
 
@@ -118,7 +137,12 @@ public void editBook(BookDetailsInfo bookInfo) {
 	 jdbcTemplate.update(sql);
 }
 
-//書籍を貸出し状態にする
+/**
+ * 書籍情報を貸出しテーブルに追加する
+ *
+ * @param bookId 書籍ID
+ * @return 書籍情報
+ */
 public void rentBook(int bookId) {
 
     String sql = "INSERT INTO rentbooks (book_id) SELECT " + bookId + "where NOT EXISTS (select book_id from rentbooks where book_id = " + bookId +")";
@@ -126,6 +150,12 @@ public void rentBook(int bookId) {
 	    jdbcTemplate.update(sql);
 	}
 
+/**
+ * 貸出しテーブルのチェックをする
+ *
+ * @param bookId 書籍ID
+ * @return 書籍情報
+ */
 public int count() {
 	String sql = "select count(book_id) from rentbooks";
 	return jdbcTemplate.queryForObject(sql, int.class);
