@@ -114,8 +114,11 @@ public class BooksService {
         jdbcTemplate.update(sql);
     }
     
-    
-//書籍を削除する
+    /**
+     * 書籍を削除する
+     *
+     * @param bookId 書籍情報
+     */
 public void deleteBook(int bookId) {
 
 	    String sql = "delete from books where id =" + bookId;
@@ -123,7 +126,11 @@ public void deleteBook(int bookId) {
 	    jdbcTemplate.update(sql);
 	}
 
-//本の情報を更新する
+/**
+ * 書籍の情報を更新する
+ *
+ * @param bookInfo 書籍情報
+ */
 public void editBook(BookDetailsInfo bookInfo) {
 	String sql = "UPDATE books SET title ='" + bookInfo.getTitle() 
 	+ "', author = '" + bookInfo.getAuthor() 
@@ -151,14 +158,26 @@ public void rentBook(int bookId) {
 	}
 
 /**
- * 貸出しテーブルのチェックをする
+ * 書籍の貸出し状況を確認する
  *
- * @param bookId 書籍ID
- * @return 書籍情報
+ * @param bookId 書籍情報
  */
-public int count() {
-	String sql = "select count(book_id) from rentbooks";
+
+public int count(int bookId) {
+	String sql = "SELECT COUNT(*) FROM rentbooks WHERE book_id =" + bookId;
 	return jdbcTemplate.queryForObject(sql, int.class);
-	}
+}
+
+
+/**
+ * 書籍を返却する
+ *
+ * @param bookId 書籍情報
+ */
+public void returnBook(int bookId) {
+	String sql = "delete from rentbooks where book_id =" + bookId;
+	jdbcTemplate.update(sql);
+}
+
 
 }
