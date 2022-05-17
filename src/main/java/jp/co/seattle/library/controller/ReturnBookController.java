@@ -19,7 +19,7 @@ import jp.co.seattle.library.service.BooksService;
  */
 @Controller //APIの入り口
 public class ReturnBookController {
-    final static Logger logger = LoggerFactory.getLogger(rentBookController.class);
+    final static Logger logger = LoggerFactory.getLogger(ReturnBookController.class);
     @Autowired
     private BooksService booksService;
     /**
@@ -38,7 +38,7 @@ public class ReturnBookController {
             Model model) {
         logger.info("Welcome return! The client locale is {}.", locale);
         
-        int returnCount = booksService.returnCount(bookId);
+        int returnCount = booksService.count(bookId);
         if (returnCount == 0) {
         	model.addAttribute("rentMessage", "この本は借りられていません");
         } else {
