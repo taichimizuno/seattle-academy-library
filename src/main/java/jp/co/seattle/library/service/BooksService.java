@@ -140,5 +140,16 @@ public void returnBook(int bookId) {
 	jdbcTemplate.update(sql);
 }
 
+//書籍を検索する
+//検索結果に一致した本リスト
+public List<BookInfo> getSearchBookList(String title) {
+
+  // TODO 取得したい情報を取得するようにSQLを修正
+  List<BookInfo> getedSearchBookList = jdbcTemplate.query(
+          "select id, title, author, publisher, publish_date, thumbnail_url, thumbnail_name from books where title like '%" + title + "%' ORDER BY title asc",
+          new BookInfoRowMapper());
+
+  return getedSearchBookList;
+}
 
 }

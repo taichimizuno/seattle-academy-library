@@ -25,7 +25,18 @@
         </div>
     </header>
     <main>
+    <div class="f_box">
         <h1>Home</h1>
+            <div class="f_item">
+                <form method="post" action="searchBook">
+                    <div class="search2">
+                            <input type="text" class="search1" name="search_title"> 
+                            <!-- <input type="submit" class="search_btn" id="search-btn" value="検索"> -->
+                            <button type="submit" class="search_btn">検索</button>
+                    </div>
+                </form>
+             </div>
+         </div>
         <a href="<%=request.getContextPath()%>/addBook" class="btn_add_book">書籍の追加</a>
         <div class="content_body">
             <c:if test="${!empty resultMessage}">
