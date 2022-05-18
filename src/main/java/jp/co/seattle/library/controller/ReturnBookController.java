@@ -38,7 +38,7 @@ public class ReturnBookController {
             Model model) {
         logger.info("Welcome return! The client locale is {}.", locale);
         
-        int returnCount = booksService.returnCount(bookId);
+        int returnCount = booksService.count(bookId);
         if (returnCount == 0) {
         	model.addAttribute("rentMessage", "借りられていません");
         } else {

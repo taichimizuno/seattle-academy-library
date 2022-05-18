@@ -42,11 +42,11 @@ public class rentBookController {
             Model model) {
         logger.info("Welcome rent! The client locale is {}.", locale);
         
-        int size = booksService.count();
-        booksService.rentBook(bookId);
-        int count = booksService.count();
+        int rentCount= booksService.count(bookId);
         
-        if (size == count) {
+        if (rentCount == 0) {
+        	booksService.rentBook(bookId);
+        }else {
         	model.addAttribute("rentMessage", "貸出し済みです");
         }
         
