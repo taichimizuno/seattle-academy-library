@@ -31,7 +31,6 @@
                 <form method="post" action="searchBook">
                     <div class="search2">
                             <input type="text" class="search1" name="search_title"> 
-                            <!-- <input type="submit" class="search_btn" id="search-btn" value="検索"> -->
                             <button type="submit" class="search_btn">検索</button>
                     </div>
                 </form>
