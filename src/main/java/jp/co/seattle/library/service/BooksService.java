@@ -157,12 +157,12 @@ public void rentBook(int bookId) {
 	    jdbcTemplate.update(sql);
 	}
 
+
 /**
  * 書籍の貸出し状況を確認する
  *
  * @param bookId 書籍情報
  */
-
 public int count(int bookId) {
 	String sql = "SELECT COUNT(*) FROM rentbooks WHERE book_id =" + bookId;
 	return jdbcTemplate.queryForObject(sql, int.class);
