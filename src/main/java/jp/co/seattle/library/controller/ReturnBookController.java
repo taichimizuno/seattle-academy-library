@@ -19,7 +19,7 @@ import jp.co.seattle.library.service.BooksService;
  */
 @Controller //APIの入り口
 public class ReturnBookController {
-    final static Logger logger = LoggerFactory.getLogger(rentBookController.class);
+    final static Logger logger = LoggerFactory.getLogger(ReturnBookController.class);
     @Autowired
     private BooksService booksService;
     /**

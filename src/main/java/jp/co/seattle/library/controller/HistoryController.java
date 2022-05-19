@@ -15,7 +15,7 @@ import jp.co.seattle.library.service.BooksService;
  */
 @Controller //APIの入り口
 public class HistoryController {
-	final static Logger logger = LoggerFactory.getLogger(AddBooksController.class);
+	final static Logger logger = LoggerFactory.getLogger(HistoryController.class);
 
     @Autowired
     private BooksService booksService;
@@ -24,21 +24,8 @@ public class HistoryController {
     //RequestParamでname属性を取得
     public String login(Model model) {
     	
-    	
+    	 model.addAttribute("historyList", booksService.getHistoryList());
         return "history";
-    
-    /**
-     * 書籍情報を登録する
-     * @param locale ロケール情報
-     * @param title 書籍名
-     * @param author 著者名
-     * @param publisher 出版社
-     * @param file サムネイルファイル
-     * @param model モデル
-     * @return 遷移先画面
-     */
-   
-    	
     
     }
 }

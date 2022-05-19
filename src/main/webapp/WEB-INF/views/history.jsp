@@ -14,6 +14,9 @@
 <link href="<c:url value="/resources/css/home.css" />" rel="stylesheet" type="text/css">
 <script src="https://code.jquery.com/jquery-3.2.1.min.js"></script>
 <script src="resources/js/thumbnail.js"></script>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+<link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.1.3/css/bootstrap.min.css" integrity="sha384-MCw98/SFnGE8fJT3GXwEOngsV7Zt27NXFoaoApmYm81iuXoPkFOJwJ8ERdknLPMO" crossorigin="anonymous">
 </head>
 <body class="wrapper">
     <header>
@@ -28,26 +31,37 @@
             </ul>
         </div>
     </header>
-    <table class="table-bordered">
-    <thead>
+    <div class="container">
+    <div class="table table-sm">
+    <table class="table table-bordered">
+     
+    <thead class="table-primary">
         <tr>
-            <th>ヘッダ行・1列目の列名</th>
-            <th>ヘッダ行・2列目の列名</th>
-            <th>ヘッダ行・2列目の列名</th>
+            <th>書籍名</th>
+            <th>貸出日</th>
+            <th>返却日</th>
         </tr>
     </thead>
     <tbody>
+    <c:forEach var="historyInfo" items="${historyList}">
         <tr>
-            <td>1行目・1列目のデータ</td>
-            <td>1行目・2列目のデータ</td>
-            <td>1行目・3列目のデータ</td>
-        </tr>
-        <tr>
-            <td>2行目・1列目のデータ</td>
-            <td>2行目・2列目のデータ</td>
-            <td>2行目・3列目のデータ</td>
-        </tr>
+        <td>
+         <form method="post" class="book_title" action="<%=request.getContextPath()%>/details" name="bookId">
+            <a href="javascript:void(0)" onclick="this.parentNode.submit();">
+            ${historyInfo.title}
+            </a> <input type="hidden" name="bookId" value="${historyInfo.bookId}">
+          </form>
+          </td>
+          
+            <td>${historyInfo.rendingDate}</td>
+        
+            <td>${historyInfo.returnDate}</td>
+       </tr>
+       </c:forEach>
     </tbody>
+   
 </table>
+</div>
+</div>
 </body>
 </html>

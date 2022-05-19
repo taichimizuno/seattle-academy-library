@@ -10,8 +10,10 @@ import org.springframework.stereotype.Service;
 
 import jp.co.seattle.library.dto.BookDetailsInfo;
 import jp.co.seattle.library.dto.BookInfo;
+import jp.co.seattle.library.dto.HistoryInfo;
 import jp.co.seattle.library.rowMapper.BookDetailsInfoRowMapper;
 import jp.co.seattle.library.rowMapper.BookInfoRowMapper;
+import jp.co.seattle.library.rowMapper.HistoryInfoRowMapper;
 
 /**
  * 書籍サービス
@@ -38,6 +40,20 @@ public class BooksService {
                 new BookInfoRowMapper());
 
         return getedBookList;
+    }
+    /**
+     * 貸出し履歴の書籍リストを取得する
+     *
+     * @return 書籍リスト
+     */
+    public List<HistoryInfo> getHistoryList() {
+
+        // TODO 取得したい情報を取得するようにSQLを修正
+        List<HistoryInfo> getedHistoryList = jdbcTemplate.query(
+                "select books.title,books.id, rentbooks.rending_date, rentbooks.return_date from books inner join rentbooks on books.id = rentbooks.book_id",
+                new HistoryInfoRowMapper());
+
+        return getedHistoryList;
     }
 
     /**
@@ -120,7 +136,7 @@ public void editBook(BookDetailsInfo bookInfo) {
 //書籍を貸出し状態にする
 public void rentBook(int bookId) {
 
-    String sql = "INSERT INTO rentbooks (book_id) SELECT " + bookId + " where NOT EXISTS (select book_id from rentbooks where rentbooks.book_id = " + bookId +")";
+    String sql = "INSERT INTO rentbooks (book_id, rending_date) SELECT " + bookId + ", now() where NOT EXISTS (select book_id from rentbooks where rentbooks.book_id = " + bookId +")";
     
 	    jdbcTemplate.update(sql);
 	}
@@ -131,12 +147,12 @@ public int count() {
 	}
 //書籍を返却する
 public int returnCount(int bookId) {
-	String sql = "SELECT COUNT(*) FROM rentbooks WHERE book_id =" + bookId;
+	String sql = "SELECT COUNT(rending_date) FROM rentbooks WHERE book_id =" + bookId;
 	return jdbcTemplate.queryForObject(sql, int.class);
 }
 
 public void returnBook(int bookId) {
-	String sql = "delete from rentbooks where book_id =" + bookId;
+	String sql = "UPDATE rentbooks SET rending_date  = null, return_date = now() WHERE book_id =" +bookId;
 	jdbcTemplate.update(sql);
 }
 

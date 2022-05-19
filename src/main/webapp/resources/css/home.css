@@ -175,11 +175,12 @@ a.btn_add_book,a.btn_bulk_book,a.btn_history, button.btn_addBook,button.btn_edit
         rgba(0, 0, 0, .2);
     color: #fff;
 }
-a.btn_history{
-	background-color: #FF9933;
-}
+
 a.btn_bulk_book{
 	background-color: #66cdaa;
+}
+a.btn_history{
+	background-color: #FF9933;
 }
 button.btn_editBook{
     background-color: #9ec34b;
@@ -242,8 +243,10 @@ a:hover, button:hover {
 	    display: flex;
     justify-content: center;
 }
-
-
+.edtDelBookBtn_box {
+    display: flex;
+    justify-content: flex-start;
+}
 button.btn_addBook, button.btn_editBook, button.btn_deleteBook,button.btn_rentBook,button.btn_returnBook,button.btn_bulkRegist {
     border-radius: 30px;
     width: 120px;
@@ -309,4 +312,10 @@ hr.border_add {
 .bulk_form .caution p{
 	color:#fa8072;
 }
-
+.container{
+    width: 50%;
+    margin: auto;
+    margin-top: 20px;
+    margin-bottom: auto;
+    background-color: transparent;
+}
