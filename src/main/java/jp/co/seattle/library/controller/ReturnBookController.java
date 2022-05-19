@@ -38,15 +38,14 @@ public class ReturnBookController {
             Model model) {
         logger.info("Welcome return! The client locale is {}.", locale);
         
-        int returnCount = booksService.returnCount(bookId);
+        int returnCount = booksService.count(bookId);
         if (returnCount == 0) {
-        	model.addAttribute("rentMessage", "借りられていません");
+        	model.addAttribute("rentMessage", "この本は借りられていません");
         } else {
         	booksService.returnBook(bookId);
         }
         
         model.addAttribute("bookDetailsInfo", booksService.getBookInfo(bookId));
-        
         return "details";
 
     }
