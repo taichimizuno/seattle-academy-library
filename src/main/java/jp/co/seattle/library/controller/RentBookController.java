@@ -18,12 +18,10 @@ import jp.co.seattle.library.service.BooksService;
  * 削除コントローラー
  */
 @Controller //APIの入り口
-public class rentBookController {
-    final static Logger logger = LoggerFactory.getLogger(rentBookController.class);
+public class RentBookController {
+    final static Logger logger = LoggerFactory.getLogger(RentBookController.class);
     @Autowired
     private BooksService booksService;
-    @Autowired
-    private BooksService bookdService;
     /**
      * 対象書籍を削除する
      *
@@ -41,17 +39,17 @@ public class rentBookController {
             @RequestParam("bookId") Integer bookId,
             Model model) {
         logger.info("Welcome rent! The client locale is {}.", locale);
+
         
         int rentCount= booksService.count(bookId);
         
         if (rentCount == 0) {
         	booksService.rentBook(bookId);
-        }else {
+        } else {
         	model.addAttribute("rentMessage", "貸出し済みです");
         }
         
-        model.addAttribute("bookDetailsInfo", bookdService.getBookInfo(bookId));
-        
+        model.addAttribute("bookDetailsInfo", booksService.getBookInfo(bookId));
         return "details";
 
     }

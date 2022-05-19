@@ -19,7 +19,7 @@ import jp.co.seattle.library.service.BooksService;
  */
 @Controller //APIの入り口
 public class ReturnBookController {
-    final static Logger logger = LoggerFactory.getLogger(rentBookController.class);
+    final static Logger logger = LoggerFactory.getLogger(ReturnBookController.class);
     @Autowired
     private BooksService booksService;
     /**
@@ -40,13 +40,12 @@ public class ReturnBookController {
         
         int returnCount = booksService.count(bookId);
         if (returnCount == 0) {
-        	model.addAttribute("rentMessage", "借りられていません");
+        	model.addAttribute("rentMessage", "この本は借りられていません");
         } else {
         	booksService.returnBook(bookId);
         }
         
         model.addAttribute("bookDetailsInfo", booksService.getBookInfo(bookId));
-        
         return "details";
 
     }

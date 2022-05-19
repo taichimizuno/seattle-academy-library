@@ -93,9 +93,31 @@ public class BooksService {
 
         jdbcTemplate.update(sql);
     }
+    /**
+     * 書籍を一括登録する
+     *
+     * @param bookInfo 書籍情報
+     */
+    public void bulkRegist(BookDetailsInfo bookInfo) {
 
+        String sql = "INSERT INTO books (title, author,publisher,publish_date, isbn, description, reg_date,upd_date) VALUES ('"
+                + bookInfo.getTitle() + "','" 
+        		+ bookInfo.getAuthor() + "','" 
+                + bookInfo.getPublisher() + "','" 
+        		+ bookInfo.getPublishDate() +"','" 
+                + bookInfo.getIsbn() + "','"
+                + bookInfo.getDescription() + "',"
+                + "now(),"
+                + "now())";
 
-//書籍を削除する
+        jdbcTemplate.update(sql);
+    }
+    
+    /**
+     * 書籍を削除する
+     *
+     * @param bookId 書籍情報
+     */
 public void deleteBook(int bookId) {
 
 	    String sql = "delete from books where id =" + bookId;
@@ -103,7 +125,11 @@ public void deleteBook(int bookId) {
 	    jdbcTemplate.update(sql);
 	}
 
-//本の情報を更新する
+/**
+ * 書籍の情報を更新する
+ *
+ * @param bookInfo 書籍情報
+ */
 public void editBook(BookDetailsInfo bookInfo) {
 	String sql = "UPDATE books SET title ='" + bookInfo.getTitle() 
 	+ "', author = '" + bookInfo.getAuthor() 
@@ -117,7 +143,12 @@ public void editBook(BookDetailsInfo bookInfo) {
 	 jdbcTemplate.update(sql);
 }
 
-//書籍を貸出し状態にする
+/**
+ * 書籍情報を貸出しテーブルに追加する
+ *
+ * @param bookId 書籍ID
+ * @return 書籍情報
+ */
 public void rentBook(int bookId) {
 
     String sql = "INSERT INTO rentbooks (book_id) SELECT " + bookId + " where NOT EXISTS (select book_id from rentbooks where rentbooks.book_id = " + bookId +")";
@@ -125,12 +156,23 @@ public void rentBook(int bookId) {
 	    jdbcTemplate.update(sql);
 	}
 
-//書籍を返却する
+
+/**
+ * 書籍の貸出し状況を確認する
+ *
+ * @param bookId 書籍情報
+ */
 public int count(int bookId) {
 	String sql = "SELECT COUNT(*) FROM rentbooks WHERE book_id =" + bookId;
 	return jdbcTemplate.queryForObject(sql, int.class);
 }
 
+
+/**
+ * 書籍を返却する
+ *
+ * @param bookId 書籍情報
+ */
 public void returnBook(int bookId) {
 	String sql = "delete from rentbooks where book_id =" + bookId;
 	jdbcTemplate.update(sql);
