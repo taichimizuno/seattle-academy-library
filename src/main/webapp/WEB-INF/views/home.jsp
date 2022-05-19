@@ -36,7 +36,12 @@
                 </form>
              </div>
          </div>
+         <div class="edtDelBookBtn_box">
         <a href="<%=request.getContextPath()%>/addBook" class="btn_add_book">書籍の追加</a>
+        <form method="post" action="<%=request.getContextPath()%>/history">
+        <button type="submit" class="btn_history">貸出し履歴一覧</button>
+        </form>
+        </div>
         <div class="content_body">
             <c:if test="${!empty resultMessage}">
                 <div class="error_msg">${resultMessage}</div>
