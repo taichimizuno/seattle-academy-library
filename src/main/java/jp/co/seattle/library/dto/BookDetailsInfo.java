@@ -29,6 +29,8 @@ public class BookDetailsInfo {
     private String isbn;
     
     private String description;
+    
+    private String status;
 
     public BookDetailsInfo() {
 
@@ -45,6 +47,7 @@ public class BookDetailsInfo {
         this.isbn = isbn;
         this.description = description;
         this.publishDate = publishDate;
+        
     }
 
 }

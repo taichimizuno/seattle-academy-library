@@ -41,7 +41,8 @@ public class RentBookController {
         logger.info("Welcome rent! The client locale is {}.", locale);
 
         
-        int rentCount = booksService.count(bookId);
+        int rentCount= booksService.count(bookId);
+        
         if (rentCount == 0) {
         	booksService.rentBook(bookId);
         } else {

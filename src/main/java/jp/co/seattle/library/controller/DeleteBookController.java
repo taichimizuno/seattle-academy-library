@@ -40,7 +40,7 @@ public class DeleteBookController {
             Model model) {
         logger.info("Welcome delete! The client locale is {}.", locale);
        
-        int returnCount = booksService.returnCount(bookId);
+        int returnCount = booksService.count(bookId);
         if (returnCount == 0) {
         	booksService.deleteBook(bookId);
         } else {
