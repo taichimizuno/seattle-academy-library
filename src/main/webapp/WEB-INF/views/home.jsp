@@ -10,7 +10,6 @@
 <link href="<c:url value="/resources/css/default.css" />" rel="stylesheet" type="text/css">
 <link href="https://use.fontawesome.com/releases/v5.6.1/css/all.css" rel="stylesheet">
 <link href="<c:url value="/resources/css/home.css" />" rel="stylesheet" type="text/css">
-<link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.1.3/css/bootstrap.min.css" integrity="sha384-MCw98/SFnGE8fJT3GXwEOngsV7Zt27NXFoaoApmYm81iuXoPkFOJwJ8ERdknLPMO" crossorigin="anonymous">
 
 </head>
 <body class="wrapper">
@@ -38,11 +37,13 @@
                 </form>
              </div>
          </div>
-         <div class="edtDelBookBtn_box">
+         <div class="edtDelBookBtn_box2">
         <a href="<%=request.getContextPath()%>/addBook" class="btn_add_book">書籍の追加</a>
-        <form method="post" action="<%=request.getContextPath()%>/history">
-        <button type="submit" class="btn btn-primary">貸出し履歴一覧</button>
-        </form>
+        <a href="<%=request.getContextPath()%>/bulkRegist" class="btn_bulk_book">一括登録</a>
+        <a href="<%=request.getContextPath()%>/history" class="btn_history">貸出し履歴一覧</a>
+        <%-- <form method="post" action="<%=request.getContextPath()%>/history">
+        <button type="submit" class="btn_history">貸出し履歴一覧</button>
+        </form> --%>
         </div>
         <div class="content_body">
             <c:if test="${!empty resultMessage}">

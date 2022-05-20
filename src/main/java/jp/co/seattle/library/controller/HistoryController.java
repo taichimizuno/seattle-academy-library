@@ -20,7 +20,7 @@ public class HistoryController {
     @Autowired
     private BooksService booksService;
     
-    @RequestMapping(value = "/history", method = RequestMethod.POST) //value＝actionで指定したパラメータ
+    @RequestMapping(value = "/history", method = RequestMethod.GET) //value＝actionで指定したパラメータ
     //RequestParamでname属性を取得
     public String login(Model model) {
     	

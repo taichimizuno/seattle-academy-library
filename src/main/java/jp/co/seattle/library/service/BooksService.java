@@ -81,7 +81,7 @@ public class BooksService {
     public BookDetailsInfo getBookInfo(int bookId) {
 
         // JSPに渡すデータを設定する
-        String sql = "select books.id, title, author, publisher, publish_date, thumbnail_url, thumbnail_name, description, isbn ,case when book_id notnull then '貸出し中' else '貸出し可' end as status from books left join rentbooks on books.id = rentbooks.book_id where books.id = "+ bookId;
+        String sql = "select books.id, title, author, publisher, publish_date, thumbnail_url, thumbnail_name, description, isbn ,case when rending_date notnull then '貸出し中' else '貸出し可' end as status from books left join rentbooks on books.id = rentbooks.book_id where books.id = "+ bookId;
 
         BookDetailsInfo bookDetailsInfo = jdbcTemplate.queryForObject(sql, new BookDetailsInfoRowMapper());
 
@@ -172,13 +172,24 @@ public void rentBook(int bookId) {
 	    jdbcTemplate.update(sql);
 	}
 
+public void reRentBook(int bookId) {
+	 String sql = "UPDATE rentbooks SET rending_date  = now(), return_date = null WHERE book_id = " + bookId;
+	 
+	 jdbcTemplate.update(sql);
+}
+
+public boolean exist(int bookId) {
+	String sql = "SELECT EXISTS (SELECT book_id FROM rentbooks WHERE book_id =" + bookId + ")";
+	return jdbcTemplate.queryForObject(sql, boolean.class);
+}
+
 /**
  * 書籍の貸出し状況を確認する
  *
  * @param bookId 書籍情報
  */
 public int count(int bookId) {
-	String sql = "SELECT COUNT(*) FROM rentbooks WHERE book_id =" + bookId;
+	String sql = "SELECT COUNT(rending_date) FROM rentbooks WHERE book_id =" + bookId;
 	
 	return jdbcTemplate.queryForObject(sql, int.class);
 }
