@@ -39,12 +39,13 @@ public class RentBookController {
             @RequestParam("bookId") Integer bookId,
             Model model) {
         logger.info("Welcome rent! The client locale is {}.", locale);
-
-        
         int rentCount= booksService.count(bookId);
+        boolean existBookId = booksService.exist(bookId);
         
-        if (rentCount == 0) {
+        if (existBookId == false) {
         	booksService.rentBook(bookId);
+        }else if (rentCount == 0) {
+        	booksService.reRentBook(bookId);
         } else {
         	model.addAttribute("rentMessage", "貸出し済みです");
         }

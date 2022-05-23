@@ -10,8 +10,10 @@ import org.springframework.stereotype.Service;
 
 import jp.co.seattle.library.dto.BookDetailsInfo;
 import jp.co.seattle.library.dto.BookInfo;
+import jp.co.seattle.library.dto.HistoryInfo;
 import jp.co.seattle.library.rowMapper.BookDetailsInfoRowMapper;
 import jp.co.seattle.library.rowMapper.BookInfoRowMapper;
+import jp.co.seattle.library.rowMapper.HistoryInfoRowMapper;
 
 /**
  * 書籍サービス
@@ -39,6 +41,20 @@ public class BooksService {
 
         return getedBookList;
     }
+    /**
+     * 貸出し履歴の書籍リストを取得する
+     *
+     * @return 書籍リスト
+     */
+    public List<HistoryInfo> getHistoryList() {
+
+        // TODO 取得したい情報を取得するようにSQLを修正
+        List<HistoryInfo> getedHistoryList = jdbcTemplate.query(
+                "select books.title,books.id, rentbooks.rending_date, rentbooks.return_date from books inner join rentbooks on books.id = rentbooks.book_id",
+                new HistoryInfoRowMapper());
+
+        return getedHistoryList;
+    }
 
     /**
      * 書籍IDに紐づく書籍詳細情報を取得する
@@ -65,7 +81,7 @@ public class BooksService {
     public BookDetailsInfo getBookInfo(int bookId) {
 
         // JSPに渡すデータを設定する
-        String sql = "select books.id, title, author, publisher, publish_date, thumbnail_url, thumbnail_name, description, isbn ,case when book_id notnull then '貸出し中' else '貸出し可' end as status from books left join rentbooks on books.id = rentbooks.book_id where books.id = "+ bookId;
+        String sql = "select books.id, title, author, publisher, publish_date, thumbnail_url, thumbnail_name, description, isbn ,case when rending_date notnull then '貸出し中' else '貸出し可' end as status from books left join rentbooks on books.id = rentbooks.book_id where books.id = "+ bookId;
 
         BookDetailsInfo bookDetailsInfo = jdbcTemplate.queryForObject(sql, new BookDetailsInfoRowMapper());
 
@@ -151,11 +167,21 @@ public void editBook(BookDetailsInfo bookInfo) {
  */
 public void rentBook(int bookId) {
 
-    String sql = "INSERT INTO rentbooks (book_id) SELECT " + bookId + " where NOT EXISTS (select book_id from rentbooks where rentbooks.book_id = " + bookId +")";
+    String sql = "INSERT INTO rentbooks (book_id, rending_date) SELECT " + bookId + ", now() where NOT EXISTS (select book_id from rentbooks where rentbooks.book_id = " + bookId +")";
     
 	    jdbcTemplate.update(sql);
 	}
 
+public void reRentBook(int bookId) {
+	 String sql = "UPDATE rentbooks SET rending_date  = now(), return_date = null WHERE book_id = " + bookId;
+	 
+	 jdbcTemplate.update(sql);
+}
+
+public boolean exist(int bookId) {
+	String sql = "SELECT EXISTS (SELECT book_id FROM rentbooks WHERE book_id =" + bookId + ")";
+	return jdbcTemplate.queryForObject(sql, boolean.class);
+}
 
 /**
  * 書籍の貸出し状況を確認する
@@ -163,7 +189,8 @@ public void rentBook(int bookId) {
  * @param bookId 書籍情報
  */
 public int count(int bookId) {
-	String sql = "SELECT COUNT(*) FROM rentbooks WHERE book_id =" + bookId;
+	String sql = "SELECT COUNT(rending_date) FROM rentbooks WHERE book_id =" + bookId;
+	
 	return jdbcTemplate.queryForObject(sql, int.class);
 }
 
@@ -174,7 +201,7 @@ public int count(int bookId) {
  * @param bookId 書籍情報
  */
 public void returnBook(int bookId) {
-	String sql = "delete from rentbooks where book_id =" + bookId;
+	String sql = "UPDATE rentbooks SET rending_date  = null, return_date = now() WHERE book_id =" +bookId;
 	jdbcTemplate.update(sql);
 }
 

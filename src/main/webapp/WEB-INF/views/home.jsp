@@ -10,6 +10,7 @@
 <link href="<c:url value="/resources/css/default.css" />" rel="stylesheet" type="text/css">
 <link href="https://use.fontawesome.com/releases/v5.6.1/css/all.css" rel="stylesheet">
 <link href="<c:url value="/resources/css/home.css" />" rel="stylesheet" type="text/css">
+
 </head>
 <body class="wrapper">
     <header>
@@ -36,7 +37,14 @@
                 </form>
              </div>
          </div>
+         <div class="edtDelBookBtn_box2">
         <a href="<%=request.getContextPath()%>/addBook" class="btn_add_book">書籍の追加</a>
+        <a href="<%=request.getContextPath()%>/bulkRegist" class="btn_bulk_book">一括登録</a>
+        <a href="<%=request.getContextPath()%>/history" class="btn_history">貸出し履歴一覧</a>
+        <%-- <form method="post" action="<%=request.getContextPath()%>/history">
+        <button type="submit" class="btn_history">貸出し履歴一覧</button>
+        </form> --%>
+        </div>
         <div class="content_body">
             <c:if test="${!empty resultMessage}">
                 <div class="error_msg">${resultMessage}</div>
